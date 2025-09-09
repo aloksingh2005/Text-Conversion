@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Conversion & Encoding Suite — Binary, Base64, Morse, ASCII, Hex, Emoji</title>
+    <meta name="description"
+        content="Convert text to binary, base64, morse, ASCII, hex and more — instantly in your browser. Copy or download results. No signup, no backend.">
+    <meta name="keywords"
+        content="text converter, binary converter, base64 encoder, morse code, ASCII converter, hex encoder, emoji encoder">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔄 Text Conversion & Encoding Suite</h1>
+            <p>Convert between text, binary, base64, morse, ASCII, hex and emoji — all in your browser!</p>
+            <div class="header-controls">
+                <button id="darkModeToggle" class="btn btn-secondary">🌙 Dark Mode</button>
+                <label class="auto-convert-toggle">
+                    <input type="checkbox" id="autoConvert">
+                    <span>⚡ Auto Convert</span>
+                </label>
+            </div>
+        </header>
+
+        <!-- Conversion Mode Selection -->
+        <div class="mode-selector">
+            <select id="conversionMode" class="mode-dropdown">
+                <option value="text-to-binary">Text → Binary</option>
+                <option value="binary-to-text">Binary → Text</option>
+                <option value="text-to-base64">Text → Base64</option>
+                <option value="base64-to-text">Base64 → Text</option>
+                <option value="text-to-morse">Text → Morse Code</option>
+                <option value="morse-to-text">Morse → Text</option>
+                <option value="text-to-ascii">Text → ASCII</option>
+                <option value="ascii-to-text">ASCII → Text</option>
+                <option value="text-to-hex">Text → Hex</option>
+                <option value="hex-to-text">Hex → Text</option>
+                <option value="text-to-emoji">Text → Emoji</option>
+                <option value="emoji-to-text">Emoji → Text</option>
+            </select>
+
+            <div class="options">
+                <div class="option-group" id="binaryOptions" style="display: none;">
+                    <label>
+                        <input type="radio" name="binaryBits" value="8" checked> 8-bit
+                    </label>
+                    <label>
+                        <input type="radio" name="binaryBits" value="7"> 7-bit
+                    </label>
+                </div>
+
+                <div class="option-group" id="hexOptions" style="display: none;">
+                    <label>
+                        <input type="radio" name="hexCase" value="lower" checked> lowercase
+                    </label>
+                    <label>
+                        <input type="radio" name="hexCase" value="upper"> UPPERCASE
+                    </label>
+                </div>
+
+                <div class="option-group" id="emojiOptions" style="display: none;">
+                    <select id="emojiPreset">
+                        <option value="letters">Letter Mapping</option>
+                        <option value="words">Word Mapping</option>
+                        <option value="custom">Custom Fun</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conversion Panels -->
+        <div class="conversion-area">
+            <div class="panel input-panel">
+                <div class="panel-header">
+                    <h3 id="inputLabel">Input Text</h3>
+                    <div class="panel-controls">
+                        <button class="btn btn-small" id="clearInput">Clear</button>
+                        <button class="btn btn-small" id="pasteInput">Paste</button>
+                    </div>
+                </div>
+                <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+                <div class="panel-info">
+                    <span id="inputHint" class="hint">Enter text to convert</span>
+                    <span id="inputCount" class="count">0 characters</span>
+                </div>
+            </div>
+
+            <div class="center-controls">
+                <button id="convertBtn" class="btn btn-primary btn-large">🔄 Convert</button>
+                <button id="swapBtn" class="btn btn-secondary">⇄ Swap</button>
+            </div>
+
+            <div class="panel output-panel">
+                <div class="panel-header">
+                    <h3 id="outputLabel">Output</h3>
+                    <div class="panel-controls">
+                        <button class="btn btn-small" id="copyOutput">Copy</button>
+                        <button class="btn btn-small" id="downloadOutput">Download</button>
+                        <button class="btn btn-small" id="clearOutput">Clear</button>
+                    </div>
+                </div>
+                <textarea id="outputText" readonly placeholder="Converted text will appear here..."></textarea>
+                <div class="panel-info">
+                    <span id="outputHint" class="hint">Output will appear after conversion</span>
+                    <span id="outputCount" class="count">0 characters</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Display -->
+        <div id="errorDisplay" class="error-display" style="display: none;">
+            <span class="error-icon">⚠️</span>
+            <span id="errorMessage"></span>
+            <button id="closeError" class="close-error">×</button>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast"></div>
+
+        <!-- FAQ Section -->
+        <section class="faq">
+            <h2>📚 Quick Guide & FAQ</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>What is Binary?</h3>
+                    <p>Binary represents text using only 0s and 1s. Each character is converted to an 8-bit (or 7-bit)
+                        binary number.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is Base64?</h3>
+                    <p>Base64 encoding converts binary data into ASCII text using 64 characters (A-Z, a-z, 0-9, +, /).
+                        Commonly used for data transmission.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is Morse Code?</h3>
+                    <p>Morse code uses dots (.) and dashes (-) to represent letters and numbers. Words are separated by
+                        forward slashes (/).</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is ASCII?</h3>
+                    <p>ASCII represents characters as decimal numbers (0-127). Each letter, number, or symbol has a
+                        unique ASCII code.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is Hexadecimal?</h3>
+                    <p>Hex uses base-16 numbering (0-9, A-F) to represent data. Each character is converted to its hex
+                        representation.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Emoji Encoding?</h3>
+                    <p>A fun feature that maps letters and words to emoji characters using predefined patterns and
+                        mappings.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with ❤️ | No data is sent to servers - everything runs in your browser!</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
